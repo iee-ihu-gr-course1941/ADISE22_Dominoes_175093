@@ -6,11 +6,11 @@ $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 // Σε περίπτωση που τρέχουμε php –S
 $input = json_decode(file_get_contents('php://input'),true);
 
-print_r($_SERVER);
+print_r($request);
 
-exit;
-/*
-switch ($r=array_shift($request)) {
+ 
+ 
+switch ($r=array_shift($request))  {
 case 'board' :
 switch ($b=array_shift($request)) {
 case '':
@@ -25,7 +25,9 @@ break;
 break;
 default:
 header("HTTP/1.1 404 Not Found");
+
+}
 exit;
-*/
+ 
 
 ?>
