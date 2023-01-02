@@ -3,6 +3,7 @@
 
 require_once "../lib/board.php";
 require_once "../lib/dbconnect.php";
+require_once "../lib/game.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
@@ -28,9 +29,18 @@ switch ($b=array_shift($request)) {
             }
 
         break;
+
+        case 'status': 
+			if(sizeof($request)==0) {handle_status($method);}
+			else {header("HTTP/1.1 404 Not Found");}
+			break;
+                
+
+
         default:
             header("HTTP/1.1 404 Not Found");
             exit;
+            
 }
 
 
@@ -47,6 +57,13 @@ function handle_board($method) {
     
 }
 
+function handle_status($method) {
+    if($method=='GET') {
+        show_status();
+    } else {
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
+}
 
 
 
