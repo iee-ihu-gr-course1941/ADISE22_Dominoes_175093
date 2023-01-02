@@ -2,14 +2,15 @@
 #dominoes_table td {width: 3em; height:4em;border:1px solid black;text-align:center;}
 #dominoes_table2 td {width: 5em; height:5em;border:1px solid black;text-align:center;}
 #dominoes_table3 td {width: 5em; height:5em;border:1px solid black;text-align:center;  }
-#dominoes_table2   { margin-left: 32.5%} 
-#dominoes_table3 {margin-top: 1%;margin-left: 32.5%} 
+#dominoes_table   { width :100%  } 
+#dominoes_table2   { margin :auto; } 
+#dominoes_table3 {margin :auto;} 
 
-#title_player1 {margin-left: 48%;}
-#title_player2 {margin-top:4% ;margin-left: 48%;}
-#dominoes_reset {margin-top:4%; margin-left: 48%;}
-#domino_title {margin-left: 45%;}
-
+#title_player1 {margin-left: 46%;}
+#title_player2 {margin-top:4% ;margin-left: 46%;}
+#dominoes_reset {  margin-left:47%; padding-top: 2%; margin-top:5%;}
+#domino_title {  margin-left: 48%;}
+#game_initializer {margin-left: 40%;margin-top: 3%;}
 
 IMG.piece {width: 2.1em; height:2.8em;}
 TD.pmove {border:3px solid blue; background-color:yellow;}
