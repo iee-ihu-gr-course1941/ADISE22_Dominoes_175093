@@ -34,8 +34,15 @@ switch ($b=array_shift($request)) {
 			if(sizeof($request)==0) {handle_status($method);}
 			else {header("HTTP/1.1 404 Not Found");}
 			break;
-                
 
+        case 'player1': 
+            if(sizeof($request)==0) {handle_player1($method);}
+                else {header("HTTP/1.1 404 Not Found");}
+                break;       
+        case 'player2': 
+            if(sizeof($request)==0) {handle_player2($method);}
+            else {header("HTTP/1.1 404 Not Found");}
+              break;
 
         default:
             header("HTTP/1.1 404 Not Found");
@@ -65,9 +72,22 @@ function handle_status($method) {
     }
 }
 
+function handle_player1($method) {
+    if($method=='GET') {
+        show_player1();
+    } else {
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
+}
 
+function handle_player2($method) {
+    if($method=='GET') {
+        show_player2();
+    } else {
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
+}
 
- 
  
 
 

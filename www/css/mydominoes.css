@@ -12,8 +12,7 @@
 #domino_title {  margin-left: 48%;}
 #game_initializer {margin-left: 40%;margin-top: 3%;}
 
-IMG.piece {width: 2.1em; height:2.8em;}
-TD.pmove {border:3px solid blue; background-color:yellow;}
-TD.tomove {border:3px solid blue; background-color:blue;}
+IMG.piece {width: 6em; height:6em;}
+ 
 
  
