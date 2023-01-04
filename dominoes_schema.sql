@@ -22,9 +22,9 @@ USE `dominoes`;
 -- Dumping structure for table dominoes.board
 CREATE TABLE IF NOT EXISTS `board` (
   `x` int(2) NOT NULL,
-  `piece` enum('0_0','0_1','0_2','0_3','0_4','0_5','0_6','1_1','1_2','1_3','1_4','1_5','1_6','2_2','2_3','2_4','2_5','2_6','3_3','3_4','3_5','3_6','4_4','4_5','4_6','5_5','5_6','6_6') DEFAULT NULL,
+  `piece` enum('0_0','1_0','0_1','2_0','0_2','3_0','0_3','4_0','0_4','5_0','0_5','6_0','0_6','1_1','2_1','1_2','3_1','1_3','4_1','1_4','5_1','1_5','6_1,','1_6','2_2','3_2','2_3','4_2','2_4','5_2','2_5','6_2','2_6','3_3','4_3','3_4','5_3','3_5','6_3','3_6','4_4','5_4','4_5','6_4','4_6','5_5','6_5','5_6','6_6') DEFAULT NULL,
   PRIMARY KEY (`x`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table dominoes.board: ~28 rows (approximately)
 INSERT INTO `board` (`x`, `piece`) VALUES
@@ -60,7 +60,7 @@ INSERT INTO `board` (`x`, `piece`) VALUES
 -- Dumping structure for table dominoes.board_empty
 CREATE TABLE IF NOT EXISTS `board_empty` (
   `x` int(2) NOT NULL,
-  `piece` enum('0_0','0_1','0_2','0_3','0_4','0_5','0_6','1_1','1_2','1_3','1_4','1_5','1_6','2_2','2_3','2_4','2_5','2_6','3_3','3_4','3_5','3_6','4_4','4_5','4_6','5_5','5_6','6_6') DEFAULT NULL,
+  `piece` enum('0_0','1_0','0_1','2_0','0_2','3_0','0_3','4_0','0_4','5_0','0_5','6_0','0_6','1_1','2_1','1_2','3_1','1_3','4_1','1_4','5_1','1_5','6_1,','1_6','2_2','3_2','2_3','4_2','2_4','5_2','2_5','6_2','2_6','3_3','4_3','3_4','5_3','3_5','6_3','3_6','4_4','5_4','4_5','6_4','4_6','5_5','6_5','5_6','6_6') DEFAULT NULL,
   PRIMARY KEY (`x`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
@@ -100,6 +100,15 @@ DELIMITER //
 CREATE PROCEDURE `clean_board`()
 BEGIN
 	REPLACE INTO board SELECT * FROM board_empty;
+
+ UPDATE piecesp1 SET piece=NULL WHERE X>0;
+ 
+  UPDATE piecesp2 SET piece=NULL WHERE X>0;
+ 
+ 
+ UPDATE `players` SET username=NULL, token=NULL;
+UPDATE `game_status` SET `status`='not active', `p_turn`=NULL, `result`=NULL;
+
 END//
 DELIMITER ;
 
@@ -111,15 +120,43 @@ CREATE TABLE IF NOT EXISTS `game_status` (
   `last_change` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table dominoes.game_status: ~0 rows (approximately)
+-- Dumping data for table dominoes.game_status: ~1 rows (approximately)
+INSERT INTO `game_status` (`status`, `seat_turn`, `result`, `last_change`) VALUES
+	('initialized', NULL, NULL, '2023-01-04 16:29:06');
 
--- Dumping structure for table dominoes.pieces
-CREATE TABLE IF NOT EXISTS `pieces` (
-  `piece` enum('0_0','0_1','0_2','0_3','0_4','0_5','0_6','1_1','1_2','1_3','1_4','1_5','1_6','2_2','2_3','2_4','2_5','2_6','3_3','3_4','3_5','3_6','4_4','4_5','4_6','5_5','5_6','6_6') NOT NULL,
+-- Dumping structure for table dominoes.piecesp1
+CREATE TABLE IF NOT EXISTS `piecesp1` (
+  `x` tinyint(1) NOT NULL,
+  `piece` enum('0_0','0_1','0_2','0_3','0_4','0_5','0_6','1_1','1_2','1_3','1_4','1_5','1_6','2_2','2_3','2_4','2_5','2_6','3_3','3_4','3_5','3_6','4_4','4_5','4_6','5_5','5_6','6_6') DEFAULT NULL,
   `playerseat` enum('1','2') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table dominoes.pieces: ~0 rows (approximately)
+-- Dumping data for table dominoes.piecesp1: ~7 rows (approximately)
+INSERT INTO `piecesp1` (`x`, `piece`, `playerseat`) VALUES
+	(1, NULL, '1'),
+	(2, NULL, '1'),
+	(3, NULL, '1'),
+	(4, NULL, '1'),
+	(5, NULL, '1'),
+	(6, NULL, '1'),
+	(7, NULL, '1');
+
+-- Dumping structure for table dominoes.piecesp2
+CREATE TABLE IF NOT EXISTS `piecesp2` (
+  `x` tinyint(1) NOT NULL,
+  `piece` enum('0_0','0_1','0_2','0_3','0_4','0_5','0_6','1_1','1_2','1_3','1_4','1_5','1_6','2_2','2_3','2_4','2_5','2_6','3_3','3_4','3_5','3_6','4_4','4_5','4_6','5_5','5_6','6_6') DEFAULT NULL,
+  `playerseat` enum('1','2') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table dominoes.piecesp2: ~7 rows (approximately)
+INSERT INTO `piecesp2` (`x`, `piece`, `playerseat`) VALUES
+	(1, NULL, '1'),
+	(2, NULL, '1'),
+	(3, NULL, '1'),
+	(4, NULL, '1'),
+	(5, NULL, '1'),
+	(6, NULL, '1'),
+	(7, NULL, '1');
 
 -- Dumping structure for table dominoes.players
 CREATE TABLE IF NOT EXISTS `players` (
@@ -127,10 +164,13 @@ CREATE TABLE IF NOT EXISTS `players` (
   `seat` enum('1','2') NOT NULL,
   `token` varchar(100) DEFAULT NULL,
   `last_action` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`seat`)
+  PRIMARY KEY (`seat`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table dominoes.players: ~0 rows (approximately)
+-- Dumping data for table dominoes.players: ~2 rows (approximately)
+INSERT INTO `players` (`username`, `seat`, `token`, `last_action`) VALUES
+	(NULL, '1', NULL, '2023-01-04 16:34:33'),
+	(NULL, '2', NULL, '2023-01-04 16:29:00');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

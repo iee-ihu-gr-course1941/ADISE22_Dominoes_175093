@@ -20,6 +20,7 @@ $(function () {
 
 
 function login_to_game() {
+
 	if($('#username').val()=='') {
 	alert('You have to set a username');
 	return;
@@ -38,7 +39,7 @@ function login_to_game() {
 
 	function login_result(data) {
 		me = data[0];
-		 
+		$('#game_info').show(300);
 		$('#game_initializer').hide();
 		split_boards();
 		update_info();
@@ -86,6 +87,7 @@ function game_status_update() {
 
 
 	function update_info(){
+	
 		$('#game_info').html("I am Player: "+me.seat+", my name is "+me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.seat_turn+' must play now.');
 		
 		
