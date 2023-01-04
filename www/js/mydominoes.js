@@ -184,8 +184,8 @@ function show_allplayers_reset()
 {
 
 	$('#game_initializer').show(600);
-	$('#title_player2').show(1000);
-	$('#dominoes_player2').show(1000);
+	$('#title_player1').show(1000);
+	$('#dominoes_player1').show(1000);
 	$('#title_player2').show(1000);
 	$('#dominoes_player2').show(1000);
 
