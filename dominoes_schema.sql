@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `game_status` (
 
 -- Dumping data for table dominoes.game_status: ~1 rows (approximately)
 INSERT INTO `game_status` (`status`, `seat_turn`, `result`, `last_change`) VALUES
-	('initialized', NULL, NULL, '2023-01-04 16:29:06');
+	('started', '2', NULL, '2023-01-04 17:35:12');
 
 -- Dumping structure for table dominoes.piecesp1
 CREATE TABLE IF NOT EXISTS `piecesp1` (
@@ -150,13 +150,13 @@ CREATE TABLE IF NOT EXISTS `piecesp2` (
 
 -- Dumping data for table dominoes.piecesp2: ~7 rows (approximately)
 INSERT INTO `piecesp2` (`x`, `piece`, `playerseat`) VALUES
-	(1, NULL, '1'),
-	(2, NULL, '1'),
-	(3, NULL, '1'),
-	(4, NULL, '1'),
-	(5, NULL, '1'),
-	(6, NULL, '1'),
-	(7, NULL, '1');
+	(1, '0_2', '2'),
+	(2, '1_4', '2'),
+	(3, '2_3', '2'),
+	(4, '1_6', '2'),
+	(5, '4_6', '2'),
+	(6, '5_5', '2'),
+	(7, '1_4', '2');
 
 -- Dumping structure for table dominoes.players
 CREATE TABLE IF NOT EXISTS `players` (
@@ -169,8 +169,8 @@ CREATE TABLE IF NOT EXISTS `players` (
 
 -- Dumping data for table dominoes.players: ~2 rows (approximately)
 INSERT INTO `players` (`username`, `seat`, `token`, `last_action`) VALUES
-	(NULL, '1', NULL, '2023-01-04 16:34:33'),
-	(NULL, '2', NULL, '2023-01-04 16:29:00');
+	('asdfgs', '1', 'de76f45eab3a35ca832dcb80a624ddb5', '2023-01-04 17:34:56'),
+	('asdf', '2', '0e8de5df1bae5a841a4964455c8cc511', '2023-01-04 17:35:12');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

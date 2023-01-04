@@ -98,14 +98,24 @@ function show_player2() {
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('ss',$new_status,$new_turn);
 	$st->execute();
-	
-	
-	
+
 }
  
 
 
+function reset_status() 
+{
+   
+    $new_status="not active";
+	$new_turn=null;
 
+    global $mysqli;
+    $sql = 'update game_status set status=?, seat_turn=?';
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('ss',$new_status,$new_turn);
+	$st->execute();
+
+}
 
 
 

@@ -9,11 +9,28 @@ $(function () {
 	fill_board2() ;
 	fill_board3() ;
 	$('#dominoes_reset').click(reset_board);
+	$('#dominoes_reset').click(status_restarted);
 	$('#dominoes_reset').click(show_allplayers_reset);
 	$('#dominoes_login').click(login_to_game);
 
 
 });
+
+function status_restarted()
+
+{
+
+	$.ajax({url: "dominoes.php/reset/",
+	method: 'POST',
+	 
+
+});
+
+}
+ 
+
+
+
 
 
 

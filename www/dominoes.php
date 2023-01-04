@@ -47,6 +47,9 @@ switch ($b=array_shift($request)) {
 
          case 'players_info': handle_players_info($method, $request,$input);
          break;
+        
+        case 'reset':handle_reset($method);
+        break;
 
         default:
             header("HTTP/1.1 404 Not Found");
@@ -55,6 +58,17 @@ switch ($b=array_shift($request)) {
 }
 
 
+
+
+function handle_reset($method) {
+    if($method=='POST') {
+        reset_status() ;
+  
+    } else {
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
+    
+}
 
 
 
