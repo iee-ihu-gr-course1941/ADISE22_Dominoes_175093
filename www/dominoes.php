@@ -60,6 +60,20 @@ switch ($b=array_shift($request)) {
 
 
 
+// function handle_piece($method, $x,$y,$input) {
+//     if($method=='GET') {
+//         show_piece($x,$y);
+//     } else if ($method=='PUT') {
+//         move_piece($x,$y,$input['x'],$input['y'],  
+//                    $input['token']);
+//     }    
+
+
+// }
+
+
+
+
 function handle_reset($method) {
     if($method=='POST') {
         reset_status() ;
@@ -103,6 +117,10 @@ function handle_board($method) {
     }
     
 }
+
+
+
+
 
 function handle_status($method) {
     if($method=='GET') {

@@ -19,6 +19,45 @@
 CREATE DATABASE IF NOT EXISTS `dominoes` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `dominoes`;
 
+-- Dumping structure for table dominoes.allpieces
+CREATE TABLE IF NOT EXISTS `allpieces` (
+  `x` int(2) NOT NULL,
+  `piece` enum('0_0','1_0','0_1','2_0','0_2','3_0','0_3','4_0','0_4','5_0','0_5','6_0','0_6','1_1','2_1','1_2','3_1','1_3','4_1','1_4','5_1','1_5','6_1,','1_6','2_2','3_2','2_3','4_2','2_4','5_2','2_5','6_2','2_6','3_3','4_3','3_4','5_3','3_5','6_3','3_6','4_4','5_4','4_5','6_4','4_6','5_5','6_5','5_6','6_6') NOT NULL,
+  `player` enum('1','2') DEFAULT NULL,
+  PRIMARY KEY (`piece`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table dominoes.allpieces: ~28 rows (approximately)
+INSERT INTO `allpieces` (`x`, `piece`, `player`) VALUES
+	(1, '0_0', '1'),
+	(2, '0_1', NULL),
+	(3, '0_2', NULL),
+	(4, '0_3', NULL),
+	(5, '0_4', '2'),
+	(6, '0_5', NULL),
+	(7, '0_6', NULL),
+	(8, '1_1', '1'),
+	(9, '1_2', NULL),
+	(10, '1_3', '2'),
+	(11, '1_4', '2'),
+	(12, '1_5', '1'),
+	(13, '1_6', NULL),
+	(14, '2_2', '1'),
+	(15, '2_3', '2'),
+	(16, '2_4', NULL),
+	(17, '2_5', NULL),
+	(18, '2_6', NULL),
+	(19, '3_3', '2'),
+	(20, '3_4', NULL),
+	(21, '3_5', '2'),
+	(22, '3_6', '1'),
+	(23, '4_4', '2'),
+	(24, '4_5', NULL),
+	(25, '4_6', '1'),
+	(26, '5_5', NULL),
+	(27, '5_6', NULL),
+	(28, '6_6', '1');
+
 -- Dumping structure for table dominoes.board
 CREATE TABLE IF NOT EXISTS `board` (
   `x` int(2) NOT NULL,
@@ -100,14 +139,196 @@ DELIMITER //
 CREATE PROCEDURE `clean_board`()
 BEGIN
 	REPLACE INTO board SELECT * FROM board_empty;
-
+ 
+	
  UPDATE piecesp1 SET piece=NULL WHERE X>0;
  
   UPDATE piecesp2 SET piece=NULL WHERE X>0;
+  
+ UPDATE allpieces SET player=NULL WHERE X>0;
  
- 
- UPDATE `players` SET username=NULL, token=NULL;
-UPDATE `game_status` SET `status`='not active', `p_turn`=NULL, `result`=NULL;
+ UPDATE players SET username=NULL, token=NULL;
+UPDATE game_status SET status='not active', p_turn=NULL, result=NULL;
+	
+	
+    END//
+DELIMITER ;
+
+-- Dumping structure for procedure dominoes.fill_random_pieces
+DELIMITER //
+CREATE PROCEDURE `fill_random_pieces`()
+BEGIN
+
+DECLARE random_number INT;
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=1 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=1 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=2 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=2 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=3 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=3 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+
+
+
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=4 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=4 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=5 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=5 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=6 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=6 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=7 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+
+
+
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=7 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+
 
 END//
 DELIMITER ;
@@ -120,9 +341,66 @@ CREATE TABLE IF NOT EXISTS `game_status` (
   `last_change` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table dominoes.game_status: ~1 rows (approximately)
+-- Dumping data for table dominoes.game_status: ~0 rows (approximately)
 INSERT INTO `game_status` (`status`, `seat_turn`, `result`, `last_change`) VALUES
-	('started', '2', NULL, '2023-01-04 17:35:12');
+	('started', '2', NULL, '2023-01-06 07:20:54');
+
+-- Dumping structure for procedure dominoes.move_piece
+DELIMITER //
+CREATE PROCEDURE `move_piece`(x1 int,x2 INT,y1 INT ,y2 INT)
+BEGIN
+   
+   
+ DECLARE  myturn  CHAR;
+ 
+ 
+  
+ SELECT seat_turn INTO myturn FROM game_status WHERE status='started'; 
+    	
+    	
+    	
+   
+IF (myturn='1') then 	
+ 			
+ 		 if  EXISTS (SELECT * FROM  piecesp1 WHERE piece=(select CONCAT(y1,'_',y2)) OR piece=(select CONCAT(y2,'_',y1)) AND X=x1 ) then 
+			
+ 	
+					update board
+					set piece= (select CONCAT(y1,'_',y2))
+					where board.x=x2 ; 
+					
+					
+					
+					update piecesp1
+					set piece=null
+					where piecesp1.x=x1 ; 
+					
+			update game_status set seat_turn=if(myturn='1','2','1');
+	
+ 	 END if;
+
+ELSEIF (myturn='2') then 
+			 
+			  if  EXISTS (SELECT * FROM  piecesp2 WHERE piece=(select CONCAT(y1,'_',y2)) OR piece=(select CONCAT(y2,'_',y1)) AND X=x1 ) then 
+			 
+					update board
+					set piece= (select CONCAT(y1,'_',y2))
+					where board.x=x2 ; 
+					
+					
+					
+					update piecesp2
+					set piece=null
+					where piecesp2.x=x1 ; 
+
+	update game_status set seat_turn=if(myturn='1','2','1');
+	
+		 END if;
+	END IF;		
+
+
+    END//
+DELIMITER ;
 
 -- Dumping structure for table dominoes.piecesp1
 CREATE TABLE IF NOT EXISTS `piecesp1` (
@@ -133,13 +411,13 @@ CREATE TABLE IF NOT EXISTS `piecesp1` (
 
 -- Dumping data for table dominoes.piecesp1: ~7 rows (approximately)
 INSERT INTO `piecesp1` (`x`, `piece`, `playerseat`) VALUES
-	(1, NULL, '1'),
-	(2, NULL, '1'),
-	(3, NULL, '1'),
-	(4, NULL, '1'),
-	(5, NULL, '1'),
-	(6, NULL, '1'),
-	(7, NULL, '1');
+	(1, '2_2', '1'),
+	(2, '4_6', '1'),
+	(3, '1_1', '1'),
+	(4, '6_6', '1'),
+	(5, '3_6', '1'),
+	(6, '0_0', '1'),
+	(7, '1_5', '1');
 
 -- Dumping structure for table dominoes.piecesp2
 CREATE TABLE IF NOT EXISTS `piecesp2` (
@@ -150,13 +428,13 @@ CREATE TABLE IF NOT EXISTS `piecesp2` (
 
 -- Dumping data for table dominoes.piecesp2: ~7 rows (approximately)
 INSERT INTO `piecesp2` (`x`, `piece`, `playerseat`) VALUES
-	(1, '0_2', '2'),
+	(1, '3_3', '2'),
 	(2, '1_4', '2'),
-	(3, '2_3', '2'),
-	(4, '1_6', '2'),
-	(5, '4_6', '2'),
-	(6, '5_5', '2'),
-	(7, '1_4', '2');
+	(3, '0_4', '2'),
+	(4, '2_3', '2'),
+	(5, '4_4', '2'),
+	(6, '3_5', '2'),
+	(7, '1_3', '2');
 
 -- Dumping structure for table dominoes.players
 CREATE TABLE IF NOT EXISTS `players` (
@@ -169,8 +447,8 @@ CREATE TABLE IF NOT EXISTS `players` (
 
 -- Dumping data for table dominoes.players: ~2 rows (approximately)
 INSERT INTO `players` (`username`, `seat`, `token`, `last_action`) VALUES
-	('asdfgs', '1', 'de76f45eab3a35ca832dcb80a624ddb5', '2023-01-04 17:34:56'),
-	('asdf', '2', '0e8de5df1bae5a841a4964455c8cc511', '2023-01-04 17:35:12');
+	('afsdf', '1', '8517bdb2e18e5b986c1043cba5094ae4', '2023-01-06 07:20:47'),
+	('asdfasdf', '2', '3779d8ae4ca976a0ea1d0e8cd7c1fd82', '2023-01-06 07:20:54');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -1,52 +1,24 @@
 <?php
 
-function show_status() {
+ 
+
+function read_status() {
 	global $mysqli;
 	
-	 $sql= 'select * from game_status';
-     $st = $mysqli->prepare($sql);
+	$sql = 'select * from game_status';
+	$st = $mysqli->prepare($sql);
 
-     $st -> execute();
-     $res = $st ->get_result();
- 
-		 
-	 
-		header('Content-type: application/json');
-		print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
- 
+	$st->execute();
+	$res = $st->get_result();
+	$status = $res->fetch_assoc();
+	return($status);
 }
 
-function show_player1() {
-	global $mysqli;
-	
-	 $sql= 'select * from piecesp1';
-     $st = $mysqli->prepare($sql);
 
-     $st -> execute();
-     $res = $st ->get_result();
- 
-		 
-	 
-		header('Content-type: application/json');
-		print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
- 
-}
 
-function show_player2() {
-	global $mysqli;
-	
-	 $sql= 'select * from piecesp2';
-     $st = $mysqli->prepare($sql);
 
-     $st -> execute();
-     $res = $st ->get_result();
- 
-		 
-	 
-		header('Content-type: application/json');
-		print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
- 
-}
+
+
 
 
 
@@ -89,10 +61,21 @@ function show_player2() {
 		case 1: $new_status='initialized'; break;
 		case 2: $new_status='started'; 
 				if($status['seat_turn']==null) {
-					$new_turn='2'; // It was not started before...
+					$new_turn=rand(1,2); // It was not started before...
 				}
 				break;
 	}
+
+	
+	
+	if ($active_players==2 ) 
+	
+	{
+		$sql = 'call fill_random_pieces()';
+		$mysqli->query($sql);
+	 
+	}
+
 
 	$sql = 'update game_status set status=?, seat_turn=?';
 	$st = $mysqli->prepare($sql);
