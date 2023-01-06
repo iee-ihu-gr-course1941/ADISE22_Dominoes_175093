@@ -21,7 +21,7 @@ case 'board' :
 switch ($b=array_shift($request)) {
             case '':
             case null: handle_board($method);break;
-            case 'piece':// handle_piece($method, $request[0],$request[1],$input);
+            case 'piece': handle_piece($method, $request[0],$request[1],$input);
             break;
           
             default: header("HTTP/1.1 404 Not Found");
@@ -60,16 +60,16 @@ switch ($b=array_shift($request)) {
 
 
 
-// function handle_piece($method, $x,$y,$input) {
-//     if($method=='GET') {
-//         show_piece($x,$y);
-//     } else if ($method=='PUT') {
-//         move_piece($x,$y,$input['x'],$input['y'],  
-//                    $input['token']);
-//     }    
+function handle_piece($method, $x,$y,$input) {
+    if($method=='GET') {
+        show_piece($x,$y);
+    } else if ($method=='PUT') {
+        move_piece($x,$y,$input['x'],$input['y'],  
+                   $input['token']);
+    }    
 
 
-// }
+}
 
 
 

@@ -21,7 +21,7 @@ $(function () {
 	$('#dominoes_reset').click(status_restarted);
 	$('#dominoes_reset').click(show_allplayers_reset);
 	$('#dominoes_login').click(login_to_game);
-
+	$('#do_move').click( do_move);
 
 });
 
@@ -37,32 +37,32 @@ function status_restarted()
 
 
 
-// function do_move() {
-// 	var s = $('#the_move').val();
+function do_move() {
+	var s = $('#the_move').val();
 	
-// 	var a = s.trim().split(/[ ]+/);
-// 	if(a.length!=4) {
-// 		alert('Must give 4 numbers');
-// 		return;
-// 	}
-// 	$.ajax({url: "dominoes.php/board/piece/"+a[0]+'/'+a[1], 
-// 			method: 'PUT',
-// 			dataType: "json",
-// 			contentType: 'application/json',
-// 			data: JSON.stringify( {x: a[2], y: a[3]}),
-// 			headers: {"X-Token": me.token},
-// 			success: move_result,
-// 			error: login_error});
+	var a = s.trim().split(/[ ]+/);
+	if(a.length!=4) {
+		alert('Must give 4 numbers');
+		return;
+	}
+ 	$.ajax({url: "dominoes.php/board/piece/"+a[0]+'/'+a[1], 
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {x: a[2], y: a[3]}),
+			headers: {"X-Token": me.token},
+			success: move_result,
+			error: login_error});
 	
-// }
+}
 
-// function move_result(data){
-// 	game_status_update();
-// 	fill_board_by_data(data);
-// }
+function move_result(data){
+	game_status_update();
+	fill_board_by_data(data);
+}
+ 
 
-
-
+ 
 
 
 
