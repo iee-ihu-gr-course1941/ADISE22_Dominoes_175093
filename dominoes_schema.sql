@@ -342,9 +342,9 @@ CREATE TABLE IF NOT EXISTS `game_status` (
   `last_change` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table dominoes.game_status: ~1 rows (approximately)
+-- Dumping data for table dominoes.game_status: ~0 rows (approximately)
 INSERT INTO `game_status` (`status`, `seat_turn`, `result`, `last_change`) VALUES
-	('started', '2', NULL, '2023-01-07 03:21:19');
+	('aborded', NULL, NULL, '2023-01-07 03:40:17');
 
 -- Dumping structure for procedure dominoes.move_piece
 DELIMITER //
@@ -450,8 +450,53 @@ CREATE TABLE IF NOT EXISTS `players` (
 
 -- Dumping data for table dominoes.players: ~2 rows (approximately)
 INSERT INTO `players` (`username`, `seat`, `token`, `last_action`) VALUES
-	('asdfasdf', '1', 'e3ba08346b14bc1a26feed8bb370f834', '2023-01-07 03:21:19'),
-	('asdfasdf', '2', 'a43467d80a857f02e484fcc28cf4146d', '2023-01-07 03:21:15');
+	('asdf', '1', '1135f1ec4df9f0a854f949fc06e963cc', '2023-01-07 03:40:17'),
+	(NULL, '2', NULL, '2023-01-07 03:26:17');
+
+-- Dumping structure for procedure dominoes.take_piece2
+DELIMITER //
+CREATE PROCEDURE `take_piece2`()
+BEGIN
+ 
+	DECLARE random_number,turn,num2 INT;
+
+SELECT seat_turn INTO turn FROM game_status;
+ 
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+
+
+
+
+while ('1'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number ) or '2'=(SELECT player FROM allpieces WHERE   allpieces.x=random_number )  ) do
+SET random_number =FLOOR(1 + RAND()*(28-1+1));
+END while;
+
+SET  num2 =FLOOR(1 + RAND()*(8-1+1));
+
+if (turn='1') then
+if ((SELECT COUNT(*) FROM piecesp1 WHERE piecesp1.piece) <8 ) then 
+
+while ( (SELECT piece FROM piecesp1 WHERE   x=num2 ) IS not NULL ) do
+SET num2 =FLOOR(1 + RAND()*(8-1+1));
+END while;
+
+UPDATE piecesp1 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp1.x=num2 ;
+UPDATE allpieces SET player =1 WHERE X = random_number;
+END if;
+
+ELSEIF (turn='2') then
+if ((SELECT COUNT(*) FROM piecesp2 WHERE piecesp2.piece) <8 ) then 
+while ( (SELECT piece FROM piecesp2 WHERE   x=num2 ) IS not NULL  ) do
+SET num2 =FLOOR(1 + RAND()*(8-1+1));
+END while;
+ 
+UPDATE piecesp2 SET piece = (SELECT piece FROM allpieces WHERE allpieces.player is null AND allpieces.x= random_number  ) WHERE piecesp2.x=num2 ;
+UPDATE allpieces SET player =2 WHERE X = random_number;
+END if;
+END if ;
+	
+    END//
+DELIMITER ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
