@@ -13,6 +13,14 @@ $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 $input = json_decode(file_get_contents('php://input'),true);
 
  
+if($input==null) {
+    $input=[];
+}
+if(isset($_SERVER['HTTP_X_TOKEN'])) {
+    $input['token']=$_SERVER['HTTP_X_TOKEN'];
+} else {
+    $input['token']='';
+}
 
   
  
@@ -35,6 +43,11 @@ switch ($b=array_shift($request)) {
 			else {header("HTTP/1.1 404 Not Found");}
 			break;
 
+     case 'update': 
+        if(sizeof($request)==0) {updated($method);}
+        else {header("HTTP/1.1 404 Not Found");}
+        break;
+    
         case 'player1': 
             if(sizeof($request)==0) {handle_player1($method);}
                 else {header("HTTP/1.1 404 Not Found");}
@@ -44,7 +57,11 @@ switch ($b=array_shift($request)) {
             else {header("HTTP/1.1 404 Not Found");}
           
             break;
-
+        case 'takepiece': 
+                if(sizeof($request)==0) {take_piece2($method);}
+                else {header("HTTP/1.1 404 Not Found");}
+              
+                break;
          case 'players_info': handle_players_info($method, $request,$input);
          break;
         
@@ -71,6 +88,32 @@ function handle_piece($method, $x,$y,$input) {
 
 }
 
+
+
+
+
+function updated($method) {
+    if($method=='GET') {
+        update_game_status2();
+  
+    } else {
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
+    
+}
+
+
+
+
+function take_piece2($method) {
+    if($method=='POST') {
+        extra_piece() ;
+  
+    } else {
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
+    
+}
 
 
 
@@ -109,6 +152,7 @@ function handle_players_info($method, $p,$input) {
 function handle_board($method) {
     if($method=='GET') {
             show_board();
+           
     } else if ($method=='POST') {
           reset_board();
            

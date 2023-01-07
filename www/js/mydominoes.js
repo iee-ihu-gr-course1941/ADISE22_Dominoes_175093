@@ -11,6 +11,8 @@ $(function () {
 	fill_board2() ;
 	fill_board3() ;
 
+	$('#take_piece1').hide();
+ 
 	$('#move_div').hide(100);
 	$('#title_player1').hide(100);
 	$('#dominoes_player1').hide(100);
@@ -21,6 +23,11 @@ $(function () {
 	$('#dominoes_reset').click(status_restarted);
 	$('#dominoes_reset').click(show_allplayers_reset);
 	$('#dominoes_login').click(login_to_game);
+	
+	$('#take_piece1').click(take_piece);
+	 
+
+
 	$('#do_move').click( do_move);
 
 });
@@ -34,6 +41,9 @@ function status_restarted()
 
 }
  
+
+
+
 
 
 
@@ -61,12 +71,17 @@ function move_result(data){
 	fill_board_by_data(data);
 }
  
-
  
 
+function take_piece()
+{
 
+	$.ajax({url: "dominoes.php/takepiece/",
+	method: 'POST',
+	
+});
 
-
+}
 
 
 function login_to_game() {
@@ -93,7 +108,7 @@ function login_to_game() {
 		$('#game_initializer').hide();
 		split_boards();
 		update_info();
-		 
+	 
 		$('#dominoes_reset').show();
 		game_status_update();
 		
@@ -109,8 +124,9 @@ function login_to_game() {
 		 
 	if(me.seat=="1") {
 		x=0;
-	 
-	
+		 
+		 
+		
 		$('#title_player2').hide(1000);
 		$('#dominoes_player2').hide(1000);
 
@@ -122,6 +138,7 @@ function login_to_game() {
 
 	 
 	 
+
 		$('#title_player1').hide(1000);
 		$('#dominoes_player1').hide(1000);
 		 
@@ -136,32 +153,57 @@ function game_status_update() {
 	
 	
 	 	$.ajax({url: "dominoes.php/status/", success: update_status});
+
+
 	 }
 
 
 	function update_info(){
 	
-		$('#game_info').html("I am Player: "+me.seat+", my name is "+me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.seat_turn+' must play now.');
+		$('#game_info').html("I am Player: "+me.seat+", my name is "+me.username +'<br>Token='+me.token+'<br>Game state: '+game_status.status+', '+ game_status.seat_turn+' must play now.'+ '<br> The winner is  '+game_status.result);
 		fill_board();
 		fill_board2();
 		fill_board3();
+		game_update();
 			 		
 }
 		
 	
 
+function game_update() {
+	
+	
+	$.ajax({url: "dominoes.php/update/"});
+
+   
+}
+
+
+
+
+
 
 	function update_status(data) {
 		game_status=data[0];
+
+		
 		update_info();
 		if(game_status.seat_turn==me.seat  &&  me.seat!=null) {
 			x=0;
 			// do play
 		 
+
+			 
+		 $("#take_piece1").show();
 			$('#move_div').show(1000);
-			setTimeout(function() { game_status_update();}, 3000);
+		 
+			setTimeout(function() { game_status_update();}, 5000);
 		} else {
 			// must wait for something
+			$("#take_piece2").show();
+
+
+			
 			$('#move_div').hide(1000);
 			setTimeout(function() { game_status_update();}, 2000);
 		}
@@ -190,7 +232,7 @@ function draw_hands_board() {
      var t='<table id="dominoes_table2">';
      for(var i=2;i>1;i--) {
 		t += '<tr>';
-	  for(var j=1;j<8;j++) {
+	  for(var j=1;j<9;j++) {
 		t += '<td class="dominoes_square"id="square2_'+j+'">' + j +'</td>';
 	}
 		t+='</tr>';
@@ -204,7 +246,7 @@ function draw_hands_board2() {
 	var t='<table id="dominoes_table3">';
 	for(var i=2;i>1;i--) {
 		t += '<tr>';
-			for(var j=1;j<8;j++) {
+			for(var j=1;j<9;j++) {
 			t += '<td class="dominoes_square"id="square3_'+j+'">' + j +'</td>';
 			}
 		t+='</tr>';
@@ -241,7 +283,7 @@ function show_allplayers_reset()
 
 	$('#game_info').hide(300);
 	
-		  
+	$("#take_piece1").hide(100);
 
 
 }
@@ -273,7 +315,7 @@ function show_allplayers_reset()
 				);
 				}
 		 
-
+ 
 
 		function fill_board_by_data(data) {
 			for(var i=0;i<data.length;i++) {
