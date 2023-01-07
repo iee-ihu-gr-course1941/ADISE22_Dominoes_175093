@@ -30,33 +30,33 @@ CREATE TABLE IF NOT EXISTS `allpieces` (
 -- Dumping data for table dominoes.allpieces: ~28 rows (approximately)
 INSERT INTO `allpieces` (`x`, `piece`, `player`) VALUES
 	(1, '0_0', '2'),
-	(2, '0_1', '2'),
-	(3, '0_2', '2'),
-	(4, '0_3', NULL),
-	(5, '0_4', '2'),
-	(6, '0_5', NULL),
+	(2, '0_1', NULL),
+	(3, '0_2', NULL),
+	(4, '0_3', '2'),
+	(5, '0_4', NULL),
+	(6, '0_5', '2'),
 	(7, '0_6', '2'),
-	(8, '1_1', NULL),
-	(9, '1_2', '2'),
+	(8, '1_1', '2'),
+	(9, '1_2', NULL),
 	(10, '1_3', '1'),
-	(11, '1_4', NULL),
-	(12, '1_5', '2'),
+	(11, '1_4', '2'),
+	(12, '1_5', '1'),
 	(13, '1_6', '1'),
 	(14, '2_2', NULL),
-	(15, '2_3', NULL),
-	(16, '2_4', '1'),
+	(15, '2_3', '1'),
+	(16, '2_4', '2'),
 	(17, '2_5', NULL),
 	(18, '2_6', NULL),
 	(19, '3_3', NULL),
-	(20, '3_4', '1'),
-	(21, '3_5', '1'),
+	(20, '3_4', NULL),
+	(21, '3_5', NULL),
 	(22, '3_6', '1'),
 	(23, '4_4', '1'),
-	(24, '4_5', '2'),
-	(25, '4_6', NULL),
-	(26, '5_5', '1'),
+	(24, '4_5', '1'),
+	(25, '4_6', '2'),
+	(26, '5_5', NULL),
 	(27, '5_6', NULL),
-	(28, '6_6', '1');
+	(28, '6_6', NULL);
 
 -- Dumping structure for table dominoes.board
 CREATE TABLE IF NOT EXISTS `board` (
@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS `board` (
 
 -- Dumping data for table dominoes.board: ~28 rows (approximately)
 INSERT INTO `board` (`x`, `piece`) VALUES
-	(1, '1_6'),
-	(2, '0_2'),
+	(1, NULL),
+	(2, NULL),
 	(3, NULL),
 	(4, NULL),
 	(5, NULL),
@@ -342,9 +342,9 @@ CREATE TABLE IF NOT EXISTS `game_status` (
   `last_change` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table dominoes.game_status: ~0 rows (approximately)
+-- Dumping data for table dominoes.game_status: ~1 rows (approximately)
 INSERT INTO `game_status` (`status`, `seat_turn`, `result`, `last_change`) VALUES
-	('started', '1', NULL, '2023-01-07 02:49:03');
+	('started', '2', NULL, '2023-01-07 03:21:19');
 
 -- Dumping structure for procedure dominoes.move_piece
 DELIMITER //
@@ -412,14 +412,14 @@ CREATE TABLE IF NOT EXISTS `piecesp1` (
 
 -- Dumping data for table dominoes.piecesp1: ~8 rows (approximately)
 INSERT INTO `piecesp1` (`x`, `piece`, `playerseat`) VALUES
-	(1, '4_4', '1'),
-	(2, '5_5', '1'),
-	(3, '3_5', '1'),
-	(4, '1_3', '1'),
-	(5, '2_4', '1'),
-	(6, '3_4', '1'),
-	(7, '3_6', '1'),
-	(8, '6_6', '1');
+	(1, '3_6', '1'),
+	(2, '4_5', '1'),
+	(3, '2_3', '1'),
+	(4, '4_4', '1'),
+	(5, '1_6', '1'),
+	(6, '1_3', '1'),
+	(7, '1_5', '1'),
+	(8, NULL, '1');
 
 -- Dumping structure for table dominoes.piecesp2
 CREATE TABLE IF NOT EXISTS `piecesp2` (
@@ -430,14 +430,14 @@ CREATE TABLE IF NOT EXISTS `piecesp2` (
 
 -- Dumping data for table dominoes.piecesp2: ~8 rows (approximately)
 INSERT INTO `piecesp2` (`x`, `piece`, `playerseat`) VALUES
-	(1, NULL, '2'),
-	(2, NULL, '2'),
-	(3, '1_2', '2'),
-	(4, '0_6', '2'),
-	(5, '0_1', '2'),
-	(6, '0_4', '2'),
+	(1, '0_6', '2'),
+	(2, '2_4', '2'),
+	(3, '4_6', '2'),
+	(4, '1_4', '2'),
+	(5, '0_3', '2'),
+	(6, '1_1', '2'),
 	(7, '0_0', '2'),
-	(8, '1_5', '1');
+	(8, '0_5', '1');
 
 -- Dumping structure for table dominoes.players
 CREATE TABLE IF NOT EXISTS `players` (
@@ -450,8 +450,8 @@ CREATE TABLE IF NOT EXISTS `players` (
 
 -- Dumping data for table dominoes.players: ~2 rows (approximately)
 INSERT INTO `players` (`username`, `seat`, `token`, `last_action`) VALUES
-	('asdfads', '1', '2ac94fd761a9086ec11b96ed584367ae', '2023-01-07 02:47:41'),
-	('asdfasdf', '2', '9ac0fe23cdd7519f0dbab5c5f3f64c6f', '2023-01-07 02:47:47');
+	('asdfasdf', '1', 'e3ba08346b14bc1a26feed8bb370f834', '2023-01-07 03:21:19'),
+	('asdfasdf', '2', 'a43467d80a857f02e484fcc28cf4146d', '2023-01-07 03:21:15');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
