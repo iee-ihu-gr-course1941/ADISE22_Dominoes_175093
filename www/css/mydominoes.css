@@ -9,7 +9,10 @@
 #title_player1 {margin-left: 46%;}
 #title_player2 {margin-top:4% ;margin-left: 46%;}
 #dominoes_reset {  margin-left:47%; padding-top: 2%; margin-top:5%;}
-#domino_title {  margin-left: 45%;}
+#domino_title {
+      margin-left: 45%;
+          
+            }
 #game_initializer {margin-left: 40%;margin-top: 3%;}
 
 IMG.piece {width:6em; height:6em;}

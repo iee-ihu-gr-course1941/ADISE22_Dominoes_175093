@@ -1,5 +1,6 @@
 var me={};
 var game_status={};
+var stopme=0;
 
 $(function () {
 
@@ -25,7 +26,7 @@ $(function () {
 	$('#dominoes_login').click(login_to_game);
 	
 	$('#take_piece1').click(take_piece);
-	 
+	$('#take_piece1').click(hide_takepiece);
 
 
 	$('#do_move').click( do_move);
@@ -43,7 +44,13 @@ function status_restarted()
  
 
 
+function hide_takepiece()
 
+{
+	var stopme=1;
+
+
+}
 
 
 
@@ -193,14 +200,15 @@ function game_update() {
 			// do play
 		 
 
-			 
+			 if(stopme==0){
 		 $("#take_piece1").show();
+			 }
 			$('#move_div').show(1000);
 		 
 			setTimeout(function() { game_status_update();}, 5000);
 		} else {
 			// must wait for something
-			$("#take_piece2").show();
+			$("#take_piece2").hide();
 
 
 			
