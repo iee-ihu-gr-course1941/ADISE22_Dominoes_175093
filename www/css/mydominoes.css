@@ -1,5 +1,5 @@
 
-#dominoes_table td {width: 6em; height:15em;text-align:center; background-color: rgb(233, 205, 171);}
+#dominoes_table td {width: 6em; height:13em;text-align:center;  }
 #dominoes_table2 td {width: 5em; height:5em;border:1px solid black;text-align:center;}
 #dominoes_table3 td {width: 5em; height:5em;border:1px solid black;text-align:center;  }
 #dominoes_table   { width :100%  } 
@@ -12,7 +12,7 @@
 #domino_title {  margin-left: 45%;}
 #game_initializer {margin-left: 40%;margin-top: 3%;}
 
-IMG.piece {width:7em; height:6.5em;}
+IMG.piece {width:6em; height:6em;}
 IMG.piece2 {width: 5em; height:7em;}
 
 #game_info {margin-left: 42%;}
@@ -22,7 +22,44 @@ IMG.piece2 {width: 5em; height:7em;}
 
  #take_piece1{margin-left: 4%; padding: 1%;   }
  
- body
- {
-    background-color: rgb(139, 202, 181);
- }
+ #dominoes_table
+  {
+    background-image:url(wood1.png);
+     background-size:   420%;
+     background-repeat: no-repeat;
+   
+   
+      
+    
+}
+
+
+body
+{
+
+  background-image:url(colorful.png);
+   background-size:   100%;
+   background-repeat: no-repeat;
+   background-position:top;
+  
+}
+
+#dominoes_table2
+{
+  background-image:url(wood1.png);
+   background-size:   100%;
+   background-repeat: no-repeat;
+   background-position: right 40%;
+   background-size: cover;
+  
+}
+
+#dominoes_table3
+{
+  background-image:url(wood1.png);
+   background-size:   400%;
+   background-repeat: no-repeat;
+   background-position: right 40%;
+   background-size: cover;
+  
+}
