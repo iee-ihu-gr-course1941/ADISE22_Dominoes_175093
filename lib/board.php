@@ -175,7 +175,7 @@ function move_piece($x,$y,$x2,$y2,$token) {
 	 $res = $st->get_result();
 	 $mini = $res->fetch_assoc()['minin'];
 
-	
+	 
 	
 
 	 
@@ -258,6 +258,9 @@ function move_piece($x,$y,$x2,$y2,$token) {
 						exit;
 					 }
 	   
+	   
+
+
 
 			}
 

@@ -1,6 +1,7 @@
 var me={};
 var game_status={};
-var stopme=0;
+var pressed;
+
 
 $(function () {
 
@@ -11,8 +12,8 @@ $(function () {
 	fill_board() ;
 	fill_board2() ;
 	fill_board3() ;
-
-	$('#take_piece1').hide();
+ 
+	 
  
 	$('#move_div').hide(100);
 	$('#title_player1').hide(100);
@@ -27,7 +28,10 @@ $(function () {
 	
 	$('#take_piece1').click(take_piece);
 	$('#take_piece1').click(hide_takepiece);
-
+	$('#take_piece1').hide();
+	$("#take_piece1").click(function(){
+		$("#take_piece1").hide();
+	});
 
 	$('#do_move').click( do_move);
 
@@ -47,10 +51,26 @@ function status_restarted()
 function hide_takepiece()
 
 {
-	var stopme=1;
+	pressed=1;
+
+}
+function hide_takepiece2()
+
+{
+	pressed=0;
+	 
+
 
 
 }
+
+function hide_takepiece3()
+{
+
+	$('#take_piece1').hide();
+
+}
+
 
 
 
@@ -74,6 +94,8 @@ function do_move() {
 }
 
 function move_result(data){
+	hide_takepiece3();
+	hide_takepiece2();
 	game_status_update();
 	fill_board_by_data(data);
 }
@@ -118,6 +140,7 @@ function login_to_game() {
 	 
 		$('#dominoes_reset').show();
 		game_status_update();
+		hide_takepiece2();
 		
 	}
 	
@@ -199,10 +222,11 @@ function game_update() {
 			x=0;
 			// do play
 		 
-
-			 if(stopme==0){
+		if (pressed==0) {
+			  
 		 $("#take_piece1").show();
-			 }
+
+		}
 			$('#move_div').show(1000);
 		 
 			setTimeout(function() { game_status_update();}, 5000);
