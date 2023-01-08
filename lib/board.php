@@ -148,31 +148,137 @@ function move_piece($x,$y,$x2,$y2,$token) {
 	 }
 
 
-	// $orig_board=read_board();
-	// $board=convert_board($orig_board);
-	// $n = add_valid_moves_to_piece($board,$color,$x,$y);
 
 
-	// if($n==0) {
-	// 	header("HTTP/1.1 400 Bad Request");
-	// 	print json_encode(['errormesg'=>"This piece cannot move."]);
-	// 	exit;
-	// }
+
+	 global $mysqli;
+	 global $change;
+	 
+	 
+
+	 $sql = 'select count(*) as actinb from board where piece is not null';
+	 $st = $mysqli->prepare($sql);
+	 $st->execute();
+	 $res = $st->get_result();
+	 $piecesonboard = $res->fetch_assoc()['actinb'];
+
+	 $sql = 'select max(x) as maxin from board where piece is not null';
+	 $st = $mysqli->prepare($sql);
+	 $st->execute();
+	 $res = $st->get_result();
+	 $maxi = $res->fetch_assoc()['maxin'];
+ 
+
+	 $sql = 'select min(x) as minin from board where piece is not null';
+	 $st = $mysqli->prepare($sql);
+	 $st->execute();
+	 $res = $st->get_result();
+	 $mini = $res->fetch_assoc()['minin'];
+
+	
+	
+
+	 
+
+	 if($y==1 or $y==-1 ){
 
 
-	// foreach($board[$x][$y]['moves'] as $i=>$move) {
-	// 	if($x2==$move['x'] && $y2==$move['y']) {
-	// 		do_move($x,$y,$x2,$y2);
-	// 		exit;
-	// 	}
-	// }
 
 
-	// header("HTTP/1.1 400 Bad Request");
-	// print json_encode(['errormesg'=>"This move is illegal."]);
-	// exit;
+	 if($piecesonboard==0) 
+	 {
+		$y=14;
+		do_move($x,$y,$x2,$y2);
+		exit;
+	 }
+	
 
-	do_move($x,$y,$x2,$y2);
+    if($piecesonboard>0)
+	{
+		
+
+		
+			if ($y==-1)
+			{
+				
+
+				$y=$mini-1;
+				$change = $mini;
+
+				$sql = 'select piece as pie from board where x=?';
+				$st = $mysqli->prepare($sql);
+				$st->bind_param('i', $mini);
+				$st->execute();
+				 $result = $st->get_result();
+				 $pieceforcut = $result->fetch_assoc()['pie'];
+				 	
+				 $firstn = substr($pieceforcut,0,1);
+				 $thirdn = substr($pieceforcut,2,1);
+
+					 if ($firstn==$x2)
+					 {
+
+					 	do_move($x,$y,$y2,$x2);
+					 	exit;
+					 } 
+					 elseif($firstn==$y2)
+					 {
+
+						do_move($x,$y,$x2,$y2);
+						exit;
+					 }
+	   
+
+			}
+			elseif ($y==1)
+			{
+				$y=$maxi+1;
+				$change = $maxi;
+				
+				$sql = 'select piece as pie from board where x=?';
+				$st = $mysqli->prepare($sql);
+				$st->bind_param('i', $maxi);
+				$st->execute();
+				 $result = $st->get_result();
+				 $pieceforcut = $result->fetch_assoc()['pie'];
+				 	
+				 $firstn = substr($pieceforcut,0,1);
+				 $thirdn = substr($pieceforcut,2,1);
+
+					 if ($thirdn==$x2)
+					 {
+
+					 	do_move($x,$y,$x2,$y2);
+					 	exit;
+					 } 
+					 elseif($thirdn==$y2)
+					 {
+
+						do_move($x,$y,$y2,$x2);
+						exit;
+					 }
+	   
+
+			}
+
+
+	}
+
+	
+
+
+} 
+else 
+{
+	header("HTTP/1.1 400 Bad Request");
+	print json_encode(['errormesg'=>"you can type only (-1) for (left) and  (1) for (right) in second place"]);
+ exit;
+}
+	 
+
+
+
+
 	
 }
 
