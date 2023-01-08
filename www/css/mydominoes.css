@@ -1,5 +1,5 @@
 
-#dominoes_table td {width: 3em; height:4em;border:1px solid black;text-align:center;}
+#dominoes_table td {width: 6em; height:15em;text-align:center; background-color: rgb(233, 205, 171);}
 #dominoes_table2 td {width: 5em; height:5em;border:1px solid black;text-align:center;}
 #dominoes_table3 td {width: 5em; height:5em;border:1px solid black;text-align:center;  }
 #dominoes_table   { width :100%  } 
@@ -22,3 +22,7 @@ IMG.piece2 {width: 5em; height:7em;}
 
  #take_piece1{margin-left: 4%; padding: 1%;   }
  
+ body
+ {
+    background-color: rgb(139, 202, 181);
+ }
